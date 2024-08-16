@@ -29,19 +29,21 @@ services:
       - mynetwork
 
   nginx:
-    build:
-      context: .
-      dockerfile: Dockerfiles/nginx.dockerfile
-    ports:
-      - '80:80'
-    volumes:
-      - ./api:/var/www/html
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - api
-      - db
-    networks:
-      - mynetwork
+  build:
+    context: .
+    dockerfile: Dockerfiles/nginx.dockerfile
+  ports:
+    - '80:80'
+    - '443:443'
+  volumes:
+    - ./api:/var/www/html
+    - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    - ./certs:/etc/nginx/certs
+  depends_on:
+    - api
+    - db
+  networks:
+    - mynetwork
 
 networks:
   mynetwork:
