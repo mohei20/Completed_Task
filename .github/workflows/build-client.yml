@@ -17,7 +17,7 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build Docker image
-      run: docker build -t mmohei24/client:latest -f Dockerfiles/nuxt.dockerfile .
+      run: docker build -t mmohei24/client:${{ github.run_number }} -f Dockerfiles/nuxt.dockerfile .
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -26,4 +26,4 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Push Docker image
-      run: docker push mmohei24/client:latest
+      run: docker push mmohei24/client:${{ github.run_number }}
